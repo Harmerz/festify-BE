@@ -13,8 +13,8 @@ mongoose
   .then(() => {
     console.log('DB CONNECTED')
   })
-  .catch(() => {
-    console.log('UNABLE to connect to DB')
+  .catch((err) => {
+    console.error('UNABLE to connect to DB:', err)
   })
 
 //middleware
@@ -22,6 +22,10 @@ app.use(express.json())
 
 const karyawan = require('./routes/karyawan')
 app.use('/karyawan', karyawan)
+
+
+const order = require('./routes/order')
+app.use('/order', order)
 
 app.listen(5000, () => {
   console.log('Server is running on port 5000')
