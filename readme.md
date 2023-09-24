@@ -4,20 +4,18 @@ This project is part of our final task from Web Development course that contains
 
 
 ## Authors
-- [@Harmerz](https://github.com/Harmerz)
-- [@m-rizqi](https://github.com/m-rizqi)
-- []()
-- []()
-- []()
+- [Haikal Hilmi](https://github.com/Harmerz)
+- [Johanes De Britto Krisna Arianta](https://github.com/)
+- [Muhammad Rizqi](https://github.com/m-rizqi)
+- [Nafisa Ramadhania](https://github.com/)
+- [Yosep Engelbert Christo](https://github.com/)
+
 ## Table of Contents
 
 - [Features](#features)
 - [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
-- [API Endpoints](#api-endpoints)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+- [Installation](#installation)
+- [API Documentation](#api-documentation)
 ## Features
 
 - CRUD operation for inventory manager
@@ -29,6 +27,23 @@ This project is part of our final task from Web Development course that contains
 ## Prerequisites
 Before you begin, ensure you have met the following requirements:
 
-- Node.js and npm installed.
-- MongoDB installed and running.
+- Npm installed. Download it [here](https://nodejs.org/en/download).
+- MongoDB installed and running. Donwload it [here](https://www.mongodb.com/docs/manual/installation/).
 - Clone this repository to your local machine.
+## Installation
+
+1. Create `.env` file by duplicate the `.env.example`
+2. Specify your MongoDB connection url in the `.env` file like this.
+```bash 
+DATABASE_URL=mongodb://127.0.0.1:27017
+```
+3. Install module using npm
+
+```bash
+  npm install
+```
+4. Start the server by execute this command.
+ ```bash 
+npm start
+```
+## Api Documentation
