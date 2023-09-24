@@ -1,5 +1,12 @@
-const express = require('express')
+const express = require('express'),
+  bodyParser = require('body-parser'),
+  swaggerJsdoc = require('swagger-jsdoc'),
+  swaggerOption = require('./swagger'),
+  swaggerUi = require('swagger-ui-express'),
+  specs = swaggerJsdoc(swaggerOption);
+
 const app = express()
+const port = process.env.PORT || 5000
 const mongoose = require('mongoose')
 require('dotenv').config()
 
@@ -23,12 +30,14 @@ app.use(express.json())
 const karyawan = require('./routes/karyawan')
 app.use('/karyawan', karyawan)
 
-
 const order = require('./routes/order')
 app.use('/orders', order)
 
-app.listen(5000, () => {
-  console.log('Server is running on port 5000')
+// Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }))
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`)
 })
 
 module.exports = app

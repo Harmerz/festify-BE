@@ -33,6 +33,7 @@
     "npm": "^9.2.0",
     "semver": "^7.3.8",
     "simple-update-notifier": "^1.1.0",
+    "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.0",
     "uuid": "^3.4.0",
     "yarn": "^1.22.19"
