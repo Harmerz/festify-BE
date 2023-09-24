@@ -25,7 +25,7 @@ app.use('/karyawan', karyawan)
 
 
 const order = require('./routes/order')
-app.use('/order', order)
+app.use('/orders', order)
 
 app.listen(5000, () => {
   console.log('Server is running on port 5000')

@@ -70,3 +70,24 @@ exports.deleteOrderById = (req, res) => {
       res.status(500).json({ error: err.message })
     })
 }
+
+exports.calculateTotalProfit = (req, res) => {
+  Order.aggregate([
+    {
+      $group: {
+        _id: null,
+        totalProfit: { $sum: '$totalPrice' },
+      },
+    },
+  ])
+    .then((result) => {
+      if (result.length === 0) {
+        res.status(404).json({ message: 'No orders found' })
+      } else {
+        res.status(200).json({ totalProfit: result[0].totalProfit })
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message })
+    })
+}
