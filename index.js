@@ -20,6 +20,9 @@ mongoose
 //middleware
 app.use(express.json())
 
+const recipe = require('./routes/recipe')
+app.use('/recipe', recipe)
+
 app.listen(5000, () => {
   console.log('Server is running on port 5000')
 })
