@@ -13,7 +13,7 @@ const recipeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  instruction: {
+  description: {
     type: String,
     required: true,
   },
