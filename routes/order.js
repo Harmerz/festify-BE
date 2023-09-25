@@ -30,7 +30,7 @@ const {
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Order'
+ *                 $ref: '#/components/schemas/OrderResponse'
  *       500:
  *         description: Internal server error
  */
@@ -56,7 +56,7 @@ router.get('/', getOrders)
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Order'
+ *               $ref: '#/components/schemas/OrderResponse'
  *       404:
  *         description: Order not found
  *       500:
@@ -76,10 +76,14 @@ router.get('/:id', getOrderById)
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Order'
+ *             $ref: '#/components/schemas/OrderRequest'
  *     responses:
  *       201:
  *         description: The created order
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/OrderResponse'
  *       400:
  *         description: Bad request
  *       500:
@@ -106,10 +110,14 @@ router.post('/', addOrder)
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Order'
+ *             $ref: '#/components/schemas/OrderRequest'
  *     responses:
  *       200:
  *         description: The updated order
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/OrderResponse'
  *       404:
  *         description: Order not found
  *       500:

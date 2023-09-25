@@ -15,6 +15,7 @@ const { calculateTotalProfit } = require('../controllers/order')
  *         content:
  *           application/json:
  *             schema:
+ *               $ref: '#/components/schemas/TotalProfitResponse'
  *       500:
  *         description: Internal server error
  */

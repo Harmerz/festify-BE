@@ -1,30 +1,59 @@
 const Order = require('../models/order')
-const { calculateTotalPrice } = require('./utils/order_utils');
+const Inventory = require('../models/inventory')
+const { calculateTotalPrice } = require('./utils/order_utils')
 
-exports.addOrder = (req, res) => {
-  const totalPrice = calculateTotalPrice(req.body.items)
+exports.addOrder = async (req, res) => {
+  const currentDate = new Date()
 
-  const newOrder = new Order({
-    date: new Date(),
-    items: req.body.items,
-    karyawan: req.body.karyawan,
-    totalPrice: totalPrice
-  })
+  const orderItems = req.body.items
+  const itemsToSave = []
 
-  newOrder.validate((err) => {
-    if (err) {
-      res.status(400).json({ error: err.message })
-    } else {
-      newOrder
-        .save()
-        .then((order) => {
-          res.status(201).json(order)
-        })
-        .catch((err) => {
-          res.status(500).json({ error: err.message })
-        })
+  try {
+    for (const item of orderItems) {
+      const inventoryId = item.inventoryId
+      const quantityToOrder = item.quantity
+
+      const inventoryItem = await Inventory.findById(inventoryId)
+
+      if (!inventoryItem) {
+        return res.status(400).json({ error: `Inventory item with ID ${inventoryId} not found` })
+      }
+
+      if (inventoryItem.quantity < quantityToOrder) {
+        return res.status(400).json({ error: `Quantity of ${inventoryItem.name} is low` })
+      }
+
+      inventoryItem.quantity -= quantityToOrder
+      await inventoryItem.save()
+
+      const itemPrice = inventoryItem.price
+
+      itemsToSave.push({
+        inventory: {
+          id: inventoryItem._id,
+          name: inventoryItem.name,
+        },
+        quantity: quantityToOrder,
+        price: itemPrice,
+      })
     }
-  })
+
+    const totalPrice = calculateTotalPrice(itemsToSave)
+
+    const newOrder = new Order({
+      date: currentDate,
+      items: itemsToSave,
+      karyawan: req.body.karyawan,
+      totalPrice: totalPrice,
+    })
+
+    await newOrder.validate()
+    const savedOrder = await newOrder.save()
+
+    res.status(201).json(savedOrder)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
 }
 
 exports.getOrders = (req, res) => {
@@ -52,15 +81,48 @@ exports.getOrderById = (req, res) => {
 }
 
 exports.updateOrderById = async (req, res) => {
+  const currentDate = new Date()
+  const orderItems = req.body.items
+  const itemsToUpdate = []
+
   try {
-    const newTotalPrice = calculateTotalPrice(req.body.items)
+    for (const item of orderItems) {
+      const inventoryId = item.inventoryId
+      const quantityToOrder = item.quantity
+
+      const inventoryItem = await Inventory.findById(inventoryId)
+
+      if (!inventoryItem) {
+        return res.status(400).json({ error: `Inventory item with ID ${inventoryId} not found` })
+      }
+
+      if (inventoryItem.quantity < quantityToOrder) {
+        return res.status(400).json({ error: `Quantity of ${inventoryItem.name} is low` })
+      }
+
+      inventoryItem.quantity -= quantityToOrder
+      await inventoryItem.save()
+
+      const itemPrice = inventoryItem.price
+
+      itemsToUpdate.push({
+        inventory: {
+          id: inventoryItem._id,
+          name: inventoryItem.name,
+        },
+        quantity: quantityToOrder,
+        price: itemPrice,
+      })
+    }
+
+    const totalPrice = calculateTotalPrice(itemsToUpdate)
 
     const updatedOrder = await Order.findByIdAndUpdate(
       req.params.id,
       {
-        date: new Date(),
-        items: req.body.items,
-        totalPrice: newTotalPrice,
+        date: currentDate,
+        items: itemsToUpdate,
+        totalPrice: totalPrice,
       },
       { new: true }
     )
