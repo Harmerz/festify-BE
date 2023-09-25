@@ -3,7 +3,7 @@ const express = require('express'),
   swaggerJsdoc = require('swagger-jsdoc'),
   swaggerOption = require('./swagger'),
   swaggerUi = require('swagger-ui-express'),
-  specs = swaggerJsdoc(swaggerOption);
+  specs = swaggerJsdoc(swaggerOption)
 
 const app = express()
 const port = process.env.PORT || 5000

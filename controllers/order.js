@@ -2,21 +2,25 @@ const Order = require('../models/order')
 
 exports.addOrder = (req, res) => {
   const newOrder = new Order({
-    Id: req.body.Id,
     date: req.body.date,
     items: req.body.items,
-    totalPrice: req.body.totalPrice,
     karyawan: req.body.karyawan,
   })
 
-  newOrder
-    .save()
-    .then((order) => {
-      res.status(201).json(order)
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err.message })
-    })
+  newOrder.validate((err) => {
+    if (err) {
+      res.status(400).json({ error: err.message })
+    } else {
+      newOrder
+        .save()
+        .then((order) => {
+          res.status(201).json(order)
+        })
+        .catch((err) => {
+          res.status(500).json({ error: err.message })
+        })
+    }
+  })
 }
 
 exports.getOrders = (req, res) => {
