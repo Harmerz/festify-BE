@@ -5,10 +5,10 @@ This project is part of our final task from Web Development course that contains
 
 ## Authors
 - [Haikal Hilmi](https://github.com/Harmerz)
-- [Johanes De Britto Krisna Arianta](https://github.com/)
+- [Johanes De Britto Krisna Arianta](https://github.com/krisnaarianta)
 - [Muhammad Rizqi](https://github.com/m-rizqi)
-- [Nafisa Ramadhania](https://github.com/)
-- [Yosep Engelbert Christo](https://github.com/)
+- [Nafisa Ramadhania](https://github.com/nafisaramadhania)
+- [Yosep Engelbert Christo](https://github.com/YosepEChristo)
 
 ## Table of Contents
 
