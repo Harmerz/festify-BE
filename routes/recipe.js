@@ -36,7 +36,7 @@ router.get('/', getRecipe)
  *       '400':
  *         description: Invalid status value
  */
-router.get('/:id', getOneRecipe)
+router.get('/:_id', getOneRecipe)
 
 //create-swagger
 /**
@@ -79,7 +79,7 @@ router.post('/', addRecipe)
  *       '200':
  *         description: Recipe item deleted
  */
-router.delete('/:id', deleteRecipe)
+router.delete('/:_id', deleteRecipe)
 
 //update-swagger
 /**
@@ -98,6 +98,6 @@ router.delete('/:id', deleteRecipe)
  *       '200':
  *         description: Recipe item updated
  */
-router.put('/:id', updateRecipe)
+router.put('/:_id', updateRecipe)
 
 module.exports = router

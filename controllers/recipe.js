@@ -10,7 +10,7 @@ exports.getRecipe = (req, res) => {
 }
 
 exports.getOneRecipe = (req, res) => {
-  const recipeId = req.params.id; // Assuming the ID is passed in the request parameters
+  const recipeId = req.params._id; // Assuming the ID is passed in the request parameters
 
     Recipe.findById(recipeId)
       .then((recipe) => {
@@ -25,7 +25,7 @@ exports.getOneRecipe = (req, res) => {
 
 exports.addRecipe = (req, res) => {
   const recipe = new Recipe({
-    Id: req.body.id,
+    Id: req.body._id,
     name: req.body.name,
     ingredient: req.body.ingredient,
     description: req.body.description,
@@ -37,18 +37,18 @@ exports.addRecipe = (req, res) => {
 }
 
 exports.deleteRecipe = (req, res) => {
-  Recipe.findByIdAndDelete(req.params.id, (err) => {
+  Recipe.findByIdAndDelete(req.params._id, (err) => {
     if (err) return res.status(500).json({ error: err });
     return res.sendStatus(200);
   });
 };
 
 exports.updateRecipe = (req, res) => {
-  const { Id, name, ingredient, description } = req.body;
+  const { name, ingredient, description } = req.body;
 
   Recipe.findByIdAndUpdate(
-    req.params.id,
-    { Id, name, ingredient, description },
+    req.params._id,
+    { name, ingredient, description },
     { new: true },
     (err, recipe) => {
       if (err) return res.status(500).json({ error: err });
