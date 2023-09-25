@@ -1,5 +1,6 @@
 const Order = require('../models/order')
 const Inventory = require('../models/inventory')
+const Karyawan = require('../models/karyawan')
 const { calculateTotalPrice } = require('./utils/order_utils')
 
 exports.addOrder = async (req, res) => {
@@ -58,6 +59,7 @@ exports.addOrder = async (req, res) => {
 
 exports.getOrders = (req, res) => {
   Order.find()
+    .populate('karyawan')
     .then((orders) => {
       res.status(200).json(orders)
     })
@@ -68,6 +70,7 @@ exports.getOrders = (req, res) => {
 
 exports.getOrderById = (req, res) => {
   Order.findById(req.params.id)
+    .populate('karyawan')
     .then((order) => {
       if (!order) {
         res.status(404).json({ message: 'Order not found' })
