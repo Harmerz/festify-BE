@@ -6,7 +6,6 @@ const {
   addOrder,
   updateOrderById,
   deleteOrderById,
-  calculateTotalProfit,
 } = require('../controllers/order')
 
 /**
@@ -141,24 +140,5 @@ router.put('/:id', updateOrderById)
  *         description: Internal server error
  */
 router.delete('/:id', deleteOrderById)
-
-/**
- * @swagger
- * /orders/profit:
- *   get:
- *     summary: Calculate Total Profit
- *     tags: [Orders]
- *     description: Calculate the total profit from all orders.
- *     responses:
- *       200:
- *         description: Total profit calculated successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Order'
- *       500:
- *         description: Internal server error
- */
-router.get('/profit', calculateTotalProfit)
 
 module.exports = router

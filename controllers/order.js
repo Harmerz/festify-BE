@@ -1,10 +1,14 @@
 const Order = require('../models/order')
+const { calculateTotalPrice } = require('./utils/order_utils');
 
 exports.addOrder = (req, res) => {
+  const totalPrice = calculateTotalPrice(req.body.items)
+
   const newOrder = new Order({
-    date: req.body.date,
+    date: new Date(),
     items: req.body.items,
     karyawan: req.body.karyawan,
+    totalPrice: totalPrice
   })
 
   newOrder.validate((err) => {
@@ -47,18 +51,28 @@ exports.getOrderById = (req, res) => {
     })
 }
 
-exports.updateOrderById = (req, res) => {
-  Order.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    .then((order) => {
-      if (!order) {
-        res.status(404).json({ message: 'Order not found' })
-      } else {
-        res.status(200).json(order)
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err.message })
-    })
+exports.updateOrderById = async (req, res) => {
+  try {
+    const newTotalPrice = calculateTotalPrice(req.body.items)
+
+    const updatedOrder = await Order.findByIdAndUpdate(
+      req.params.id,
+      {
+        date: new Date(),
+        items: req.body.items,
+        totalPrice: newTotalPrice,
+      },
+      { new: true }
+    )
+
+    if (!updatedOrder) {
+      return res.status(404).json({ message: 'Order not found' })
+    }
+
+    res.status(200).json(updatedOrder)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
 }
 
 exports.deleteOrderById = (req, res) => {

@@ -155,13 +155,13 @@ describe('DELETE /orders/{id}', () => {
   })
 })
 
-describe('GET /orders/profit', () => {
+describe('GET /finance/profit', () => {
   it('should calculate total profit', async () => {
     // Arrange
     await request(app).post(`/orders`).send(orderData)
     await request(app).post(`/orders`).send(orderData)
     // Act
-    const res = await request(app).get('/orders/profit')
+    const res = await request(app).get('/finance/profit')
     // Assert
     expect(res.statusCode).toBe(200)
     expect(res.body).toBe(10000)

@@ -33,6 +33,9 @@ app.use('/karyawan', karyawan)
 const order = require('./routes/order')
 app.use('/orders', order)
 
+const finance = require('./routes/finance')
+app.use('/finance', finance)
+
 // Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }))
 

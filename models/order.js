@@ -23,12 +23,7 @@ const orderSchema = new mongoose.Schema({
   ],
   totalPrice: {
     type: Number,
-    required: false,
-    get: function () {
-      return this.items.reduce((total, item) => {
-        return total + item.price * item.quantity
-      }, 0)
-    },
+    required: true,
   },
   karyawan: {
     type: mongoose.Schema.Types.ObjectId,
