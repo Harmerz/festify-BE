@@ -28,7 +28,7 @@ exports.addInventory = (req, res) => {
 
 //update inventory
 exports.updateInventory = (req, res) => {
-  const inventoryId = req.body._id; 
+  const inventoryId = req.params._id;
   const updatedData = {
     name: req.body.name,
     desc: req.body.desc,
@@ -53,8 +53,7 @@ exports.updateInventory = (req, res) => {
 
 //delete inventory
 exports.deleteInventory = (req, res) => {
-    const inventoryId = req.body._id;
-    console.log(inventoryId)
+  const inventoryId = req.params._id;
 
   InventoryMasak.findByIdAndDelete(inventoryId)
     .then((deletedInventory) => {

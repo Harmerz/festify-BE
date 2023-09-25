@@ -44,10 +44,17 @@ router.post('/', addInventory);
 //update-swagger
 /**
  * @swagger
- * /inventory:
+ * /inventory/{_id}:
  *   put:
  *     summary: Update an existing inventory item
  *     tags: [Inventory]
+ *     parameters:
+ *       - in: path
+ *         name: _id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the inventory item to update
  *     requestBody:
  *       required: true
  *       content:
@@ -58,30 +65,26 @@ router.post('/', addInventory);
  *       '200':
  *         description: Inventory item updated
  */
-router.put('/', updateInventory);
+router.put('/:_id', updateInventory);
 
 //delete-swagger
 /**
  * @swagger
- * /inventory:
+ * /inventory/{_id}:
  *   delete:
  *     summary: Delete an inventory item
  *     tags: [Inventory]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               _id:
- *                 type: string
- *             required:
- *               - _id
+ *     parameters:
+ *       - in: path
+ *         name: _id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the inventory item to delete
  *     responses:
  *       '200':
  *         description: Inventory item deleted
  */
-router.delete('/', deleteInventory);
+router.delete('/:_id', deleteInventory);
 
 module.exports = router

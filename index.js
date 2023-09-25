@@ -10,6 +10,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
+    useFindAndModify: false,
   })
 
   .then(() => {
@@ -36,9 +37,38 @@ const swaggerOptions = {
       title: 'Inventory API',
       version: '1.0.0',
     },
+    components: {
+      schemas: {
+        Inventory: {
+          type: 'object',
+          properties: {
+            name: {
+              type: 'string',
+            },
+            desc: {
+              type: 'string',
+            },
+            type: {
+              type: 'string',
+            },
+            quantity: {
+              type: 'number',
+            },
+            qtype: {
+              type: 'string',
+            },
+            price: {
+              type: 'number',
+            },
+          },
+          required: ['name', 'desc', 'type', 'qtype', 'price'], // Define required properties
+        },
+      },
+    },
   },
-  apis:  ['./routes/inventory.js'],
+  apis: ['./routes/inventory.js'],
 };
+
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
