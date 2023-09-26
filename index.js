@@ -4,12 +4,12 @@ const express = require('express'),
   swaggerOption = require('./swagger'),
   swaggerUi = require('swagger-ui-express'),
   specs = swaggerJsdoc(swaggerOption)
-
 const app = express()
 const port = process.env.PORT || 5000
 const mongoose = require('mongoose')
-require('dotenv').config()
-
+const swaggerJsDoc = require('swagger-jsdoc')
+const swaggerUI = require('swagger-ui-express')
+const Initial = require('./models/initial/role.initial.js')
 mongoose
   .connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
@@ -19,6 +19,7 @@ mongoose
 
   .then(() => {
     console.log('DB CONNECTED')
+    Initial()
   })
   .catch((err) => {
     console.error('UNABLE to connect to DB:', err)
@@ -27,8 +28,28 @@ mongoose
 //middleware
 app.use(express.json())
 
-const karyawan = require('./routes/karyawan')
-app.use('/karyawan', karyawan)
+// Routes Require and Uses
+const recipe = require('./routes/recipe')
+const auth = require('./routes/auth')
+app.use('/recipe', recipe)
+app.use('/auth', auth)
+
+//swagger config
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Inventory API',
+      version: '1.0.0',
+    },
+  },
+  apis:  ['./routes/inventory.js'],
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+
+//serve swagger ui
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 const order = require('./routes/order')
 app.use('/orders', order)
