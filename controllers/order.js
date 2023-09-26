@@ -1,6 +1,5 @@
 const Order = require('../models/order')
 const Inventory = require('../models/inventory')
-const Karyawan = require('../models/karyawan')
 const { calculateTotalPrice } = require('./utils/order_utils')
 
 exports.addOrder = async (req, res) => {
