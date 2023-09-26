@@ -1,6 +1,11 @@
-require('dotenv').config()
-const express = require('express')
+const express = require('express'),
+  bodyParser = require('body-parser'),
+  swaggerJsdoc = require('swagger-jsdoc'),
+  swaggerOption = require('./swagger'),
+  swaggerUi = require('swagger-ui-express'),
+  specs = swaggerJsdoc(swaggerOption)
 const app = express()
+const port = process.env.PORT || 5000
 const mongoose = require('mongoose')
 const swaggerJsDoc = require('swagger-jsdoc')
 const swaggerUI = require('swagger-ui-express')
@@ -16,8 +21,8 @@ mongoose
     console.log('DB CONNECTED')
     Initial()
   })
-  .catch((e) => {
-    console.log('UNABLE to connect to DB', e)
+  .catch((err) => {
+    console.error('UNABLE to connect to DB:', err)
   })
 
 //middleware
@@ -46,8 +51,17 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 //serve swagger ui
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
-app.listen(process.env.PORT ?? 5000, () => {
-  console.log('Server is running on port 5000')
+const order = require('./routes/order')
+app.use('/orders', order)
+
+const finance = require('./routes/finance')
+app.use('/finance', finance)
+
+// Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }))
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`)
 })
 
 module.exports = app
