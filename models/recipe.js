@@ -1,10 +1,6 @@
 const mongoose = require('mongoose')
 
 const recipeSchema = new mongoose.Schema({
-  Id: {
-    type: String,
-    required: true,
-  },
   name: {
     type: String,
     required: true,
@@ -13,7 +9,7 @@ const recipeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  instruction: {
+  description: {
     type: String,
     required: true,
   },
